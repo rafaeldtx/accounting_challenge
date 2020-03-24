@@ -54,7 +54,7 @@ da conta
 - A API deve possuir algum mecanismo de autenticação para identificar o cliente que está fazendo as requisições
 - Os dados devem ser armazenados em um banco MySql
 - Você deverá utilizar Ruby como linguagem de programação, e o uso de frameworks e gems ficará por sua conta!
-- Seu projeto deverá ser entregue através do github, em um repositório público ou privado, na sua própria conta do github. Depois envie o link dele para nós. Se você fez eu um repositório privado, dê acesso de leitura para os usuários: *@noelrocha*, *@agramms*, *@silviolrjunior* e *@Eduardo*. Se não conseguir compartilhar para todos, compartilhe para pelo menos dois destes usuários.
+- Seu projeto deverá ser entregue através do github, em um repositório público ou privado, na sua própria conta do github. Depois envie o link dele para nós. Se você fez eu um repositório privado, dê acesso de leitura para os usuários: *@noelrocha*, *@agramms*, *@silviolrjunior* e *@MarcovecchioEduardo*. Se não conseguir compartilhar para todos, compartilhe para pelo menos dois destes usuários.
 - Sua solução deverá conter um arquivo README.md com as instruções de como executar o código
 
 ## Opcionais ( mas dá pontos extras! )
