@@ -10,18 +10,17 @@ module Api
         transaction.account_source = account_source
         transaction.account_destination = account_destination
 
-        account_source.amount -= transaction.amount
-        account_destination.amount += transaction.amount
+        transaction.account_source.amount -= transaction.amount
+        transaction.account_destination.amount += transaction.amount
 
-        account_source.save!
-        account_destination.save!
+        transaction.save!
+        transaction.account_source.save!
+        transaction.account_destination.save!
 
         data = {
           transaction: transaction,
           message: 'Transação realizada com sucesso!'
         }
-
-        transaction.save!
 
         render json: data, status: :ok
       rescue ActiveRecord::RecordInvalid
