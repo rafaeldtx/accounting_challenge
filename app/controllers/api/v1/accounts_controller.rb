@@ -24,6 +24,14 @@ module Api
         render json: data, status: :unprocessable_entity
       end
 
+      def show
+        account = Account.find_by!(number: params[:id])
+
+        render json: {data: account}, status: :ok
+      rescue ActiveRecord::RecordNotFound
+        render json: {error: 'Conta não encontrada'}, status: :not_found
+      end
+
       private
 
       def account_params
