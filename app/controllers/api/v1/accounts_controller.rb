@@ -13,10 +13,15 @@ module Api
 
         account.save!
 
-        render json: { token: account, message: "Conta criada com sucesso" }, status: :ok
-      rescue => exception
-        render json: { message: "Não foi possível criar sua conta" },
-              status: :unprocessable_entity
+        data = { account: account, message: "Conta criada com sucesso" }
+
+        render json: data, status: :ok
+      rescue ActiveRecord::RecordInvalid
+        data = {
+          message: "Não foi possível criar conta",
+          errors: account.errors
+        }
+        render json: data, status: :unprocessable_entity
       end
 
       private
