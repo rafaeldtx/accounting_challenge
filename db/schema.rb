@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_09_232237) do
+ActiveRecord::Schema.define(version: 2020_05_10_190416) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "name", null: false
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 2020_05_09_232237) do
     t.string "token", null: false
     t.index ["number"], name: "index_accounts_on_number", unique: true
     t.index ["token"], name: "index_accounts_on_token", unique: true
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer "amount"
+    t.integer "account_source_id", null: false
+    t.integer "account_destination_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_destination_id"], name: "index_transactions_on_account_destination_id"
+    t.index ["account_source_id"], name: "index_transactions_on_account_source_id"
   end
 
 end

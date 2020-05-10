@@ -2,8 +2,8 @@ class CreateTransactions < ActiveRecord::Migration[6.0]
   def change
     create_table :transactions do |t|
       t.integer :amount
-      t.references :account, null: false, foreign_key: true
-      t.references :receiver, null: false, foreign_key: true
+      t.references :account_source, null: false
+      t.references :account_destination, null: false
 
       t.timestamps
     end
