@@ -10,6 +10,10 @@ module Api
         transaction.account_source = account_source
         transaction.account_destination = account_destination
 
+        if account_source.amount < transaction.amount
+          raise Exception.new
+        end
+
         transaction.account_source.amount -= transaction.amount
         transaction.account_destination.amount += transaction.amount
 
@@ -27,6 +31,8 @@ module Api
         render json: { errors: transaction.errors }, status: :unprocessable_entity
       rescue ActiveRecord::RecordNotFound
         render json: { error: 'Conta não encontrada' }, status: :not_found
+      rescue Exception
+        render json: { error: 'Conta não possui saldo suficiente para transação' }, status: :bad_request
       end
 
       private
