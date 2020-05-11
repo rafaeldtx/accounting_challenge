@@ -3,16 +3,9 @@ LABEL author:Rafael Domingues Teixeira <rafael991_@hotmail.com>
 
 ENV NODE_VERSION 12
 
-# SETUP ENVIRONMENT FOR YARN
-RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee \
-  /etc/apt/sources.list.d/yarn.list
-
 # INSTALL DEPENDENCIES
-# *INCLUDES: nodejs
 RUN apt-get update -qq
-RUN apt-get install -y --no-install-recommends nodejs
+RUN apt-get install -y build-essential nodejs
 
 # CREATE AND SET DEFATUL WORK DIRECTORY
 RUN mkdir -p /accounting_challenge

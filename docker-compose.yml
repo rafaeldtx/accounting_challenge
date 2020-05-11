@@ -1,0 +1,37 @@
+version: '3'
+services:
+    web:
+        build: .
+        entrypoint: rails s -b 0.0.0.0
+        container_name: accounting_challenge
+        ports:
+            - 3000:3000
+        volumes:
+            - .:/accounting-challenge-data
+        tty: true
+        stdin_open: true
+        depends_on:
+            - db
+        links:
+            - db
+        environment:
+            DB_NAME: ${DB_NAME}
+            DB_USER: ${DB_USER}
+            DB_PASSWORD: ${DB_PASSWORD}
+            DB_HOST: ${DB_HOST}
+    db:
+        image: mysql:5.7
+        restart: always
+        environment:
+            MYSQL_DATABASE: 'db'
+            MYSQL_USER: 'root'
+            MYSQL_PASSWORD: '12345'
+            MYSQL_ROOT_PASSWORD: 'P@ssw0rd'
+        ports:
+            - 3307:3306
+        expose:
+            - '3306'
+        volumes:
+            - accounting-challenge-data:/var/lib/mysql
+volumes:
+    accounting-challenge-data:
