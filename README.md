@@ -4,24 +4,36 @@
 
 Desenvolver um sistema que irá gerenciar contas bancárias de clientes, permitindo fazer transferências de um cliente para outro e expor o saldo atual da conta, sempre em reais.
 
-### Requerimentos do sistema
+### Requesitos do sistema
 - Ruby ([ruby](https://www.ruby-lang.org/pt/downloads/ "ruby"))
 - Docker/Docker-compose ([docker](https://docs.docker.com/engine/install "docker") / [docker-compose](https://docs.docker.com/compose/install/ "docker-compose"))
 - MySQL ([mysql](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/ "mysql"))
 
-### Execução
+### Instalação
 ##### - Utilizando Docker
 No terminal dentro da pasta do projeto execute os comandos:
 
-`docker-compose build` - Irá construir a imagem dos containers
+Construa a imagem dos containers
+```
+$ docker-compose build
+```
 
-`docker-compose up -d ` - Irá executar os containers em background liberando acesso ao terminal
+Execute os containers em background liberando acesso ao terminal
+```
+$ docker-compose up -d
+``` 
+Acesse ao terminal ativo do container **"accounting_challenge"**
+```
+$ docker exec -it accounting_challenge bash
+```
+Crie o banco de dados e execute as migrações
+```
+$ rails db:create db:migrate
+```
 
-`docker exec -it accounting_challenge bash` - Permiti acesso ao terminal ativo do container **"accounting_challenge"**
-
-`rails db:create db:migrate` - Criação do banco de dados e execução de migrações
-
-`bundle exec rspec` - Ainda dentro do container, é possível executar os testes e garantir o funcionamento da aplicação
+## Rodando os testes
+Ainda dentro do terminal do container, é possível executar os testes e garantir o funcionamento da aplicação
+```$ bundle exec rspec```
 
 ### Funcionalidades
 É recomendado o uso do postman ou outra ferramenta que teste serviços RESTful. Realizando as requisições com o postman é possível testar as seguintes funcionalidades: Criar conta, Transferir dinheiro e consultar saldo.
