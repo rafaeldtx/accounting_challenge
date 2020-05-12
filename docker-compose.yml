@@ -7,7 +7,7 @@ services:
         ports:
             - 3000:3000
         volumes:
-            - .:/accounting-challenge-data
+            - .:/accounting_challenge
         tty: true
         stdin_open: true
         depends_on:
