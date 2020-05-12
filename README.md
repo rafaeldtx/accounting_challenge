@@ -24,6 +24,7 @@ No terminal dentro da pasta do projeto execute os comandos:
 `bundle exec rspec` - Ainda dentro do container, é possível executar os testes e garantir o funcionamento da aplicação
 
 ### Funcionalidades
+É recomendado o uso do postman ou outra ferramenta que teste serviços RESTful. Realizando as requisições com o postman é possível testar as seguintes funcionalidades: Criar conta, Transferir dinheiro e consultar saldo.
 
 #### - Criar Conta
 Rota: 'api/v1/accounts'
@@ -31,7 +32,7 @@ Método: POST
 Parametros necessários: `<number (opcional)>, <name>, <amount>`
 
 **ENTRADA**:
-Exemplo de estrutura:
+Exemplo de estrutura de entrada:
 `{ number: 1234, name: 'Account1', amount: 100000 }` ou
 `{ name: 'Account1', amount: 100000 }`
 
@@ -60,7 +61,7 @@ Método: POST
 Parametros necessários: `<account_source>, <account_destination>, <amount>`
 
 **ENTRADA**:
-Exemplo de estrutura:
+Exemplo de estrutura de entrada:
 `{ account_source: 1234, account_destination: 4321, amount: 10000 }`
 
 **SAÍDA**:
