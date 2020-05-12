@@ -13,7 +13,11 @@ module Api
 
         account.save!
 
-        data = { account: account, message: "Conta criada com sucesso" }
+        data = {
+          account: account.number,
+          message: "Conta criada com sucesso",
+          token: account.token
+        }
 
         render json: data, status: :ok
       rescue ActiveRecord::RecordInvalid
@@ -27,9 +31,16 @@ module Api
       def show
         account = Account.find_by!(number: params[:id])
 
-        render json: {data: account}, status: :ok
+        render json: {
+          data: {
+            account: account.number,
+            amount: account.amount
+          }
+        }, status: :ok
       rescue ActiveRecord::RecordNotFound
-        render json: {error: 'Conta não encontrada'}, status: :not_found
+        render json: {
+          error: 'Conta não encontrada'
+        }, status: :not_found
       end
 
       private

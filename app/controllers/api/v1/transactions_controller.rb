@@ -22,17 +22,27 @@ module Api
         transaction.account_destination.save!
 
         data = {
-          transaction: transaction,
+          data: {
+            account_source: transaction.account_source.number,
+            account_destination: transaction.account_destination.number,
+            amount: transaction.amount
+          },
           message: 'Transação realizada com sucesso!'
         }
 
         render json: data, status: :ok
       rescue ActiveRecord::RecordInvalid
-        render json: { errors: transaction.errors }, status: :unprocessable_entity
+        render json: {
+          errors: transaction.errors
+        }, status: :unprocessable_entity
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Conta não encontrada' }, status: :not_found
+        render json: {
+          errors: ['Conta não encontrada']
+        }, status: :not_found
       rescue Exception
-        render json: { error: 'Conta não possui saldo suficiente para transação' }, status: :bad_request
+        render json: {
+          errors: ['Conta não possui saldo suficiente para transação']
+        }, status: :bad_request
       end
 
       private
