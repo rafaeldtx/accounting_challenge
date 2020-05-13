@@ -1,6 +1,8 @@
 module Api
   module V1
     class TransactionsController < ApplicationController
+      before_action :is_token_authenticable?
+
       def create
         transaction = Transaction.new(transaction_params)
         account_source = Account.find_by!(number: params[:account_source])
