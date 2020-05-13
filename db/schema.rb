@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_05_10_190416) do
 
-  create_table "accounts", force: :cascade do |t|
+  create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
     t.integer "amount", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -23,10 +23,10 @@ ActiveRecord::Schema.define(version: 2020_05_10_190416) do
     t.index ["token"], name: "index_accounts_on_token", unique: true
   end
 
-  create_table "transactions", force: :cascade do |t|
+  create_table "transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "amount"
-    t.integer "account_source_id", null: false
-    t.integer "account_destination_id", null: false
+    t.bigint "account_source_id", null: false
+    t.bigint "account_destination_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["account_destination_id"], name: "index_transactions_on_account_destination_id"

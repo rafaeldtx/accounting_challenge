@@ -2,7 +2,7 @@ version: '3'
 services:
     web:
         build: .
-        entrypoint: rails s -b 0.0.0.0
+        entrypoint: /bin/sh -c "rm -f /accounting_challenge/tmp/pids/server.pid && rails s -b 0.0.0.0"
         container_name: accounting_challenge
         ports:
             - 3000:3000
