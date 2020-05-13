@@ -51,40 +51,68 @@ describe 'POST /api/v1/accounts' do
 end
 
 describe 'GET /api/v1/accounts/:id' do
-  context 'when number account exists' do
+  context 'when has an authorized token' do
     let(:account) { create(:account) }
+    let(:encoded_token) {
+      ActionController::HttpAuthentication::Token
+        .encode_credentials(account.token)
+    }
 
-    before(:each) do
-      get "/api/v1/accounts/#{account.number}"
+    context 'and number account exists' do
+      it 'returns ok status' do
+        get "/api/v1/accounts/#{account.number}",
+            headers: { 'Authorization' => encoded_token }
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns account number and amount' do
+        get "/api/v1/accounts/#{account.number}",
+            headers: { 'Authorization' => encoded_token }
+
+        expect(response.body).to eq(
+          {
+            data: {
+              account: account.number,
+              amount: account.amount
+            }
+          }.to_json
+        )
+      end
     end
 
-    it 'returns ok status' do
-      expect(response).to have_http_status(:ok)
-    end
+    context 'and sended account number not exists' do
+      it 'returns not_found status' do
+        get '/api/v1/accounts/1',
+          headers: { 'Authorization' => encoded_token }
 
-    it 'returns account number and amount' do
-      expect(response.body).to eq(
-        {
-          data: {
-            account: account.number,
-            amount: account.amount
-          }
-        }.to_json
-      )
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'returns message error' do
+        get '/api/v1/accounts/1',
+          headers: { 'Authorization' => encoded_token }
+
+        expect(response.body).to eq({ error: 'Conta não encontrada' }.to_json)
+      end
     end
   end
 
-  context 'when sended account number not exists' do
-    it 'returns not_found status' do
-      get "/api/v1/accounts/1"
+  context 'when has an unauthorized token' do
+    it 'returns unauthorized status' do
+      get "/api/v1/accounts/1234",
+          headers: { 'Authorization' => 'token_invalid' }
 
-      expect(response).to have_http_status(:not_found)
+      expect(response).to have_http_status(:unauthorized)
     end
 
-    it 'returns message error' do
-      get "/api/v1/accounts/1"
+    it 'returns message unauthorized' do
+      get "/api/v1/accounts/1234",
+          headers: { 'Authorization' => 'token_invalid' }
 
-      expect(response.body).to eq({ error: 'Conta não encontrada' }.to_json)
+      expect(response.body).to eq(
+        { error: 'Acesso negado! Informe um Token válido!' }.to_json
+      )
     end
   end
 end
