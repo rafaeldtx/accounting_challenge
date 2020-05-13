@@ -3,6 +3,8 @@ require 'securerandom'
 module Api
   module V1
     class AccountsController < ApplicationController
+      before_action :is_token_authenticable?, except: %i[create]
+
       def create
         account = Account.new(account_params)
         account.token = SecureRandom.uuid
