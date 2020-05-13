@@ -40,7 +40,7 @@ $ bundle exec rspec
 ## Funcionalidades
 Durante o desenvolvimento foi utilizado o postman como ferramenta de teste de serviços RESTful. Porém, utilize a ferramenta que deseja para envio de requisições a API e utilize as funcionalidades: Criar conta, Transferir dinheiro e consultar saldo.
 
-### - Criar Conta
+### Criar Conta
 **Rota**: 'api/v1/accounts'
 
 **Método**: POST
@@ -146,4 +146,4 @@ Exemplo de retorno de **falha**:
 - [x] Implementação de regras de negócio
 - [x] Testes de requisição
 - [x] Testes unitários
-- [ ] Autenticação de cliente
+- [x] Autenticação de cliente
