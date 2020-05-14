@@ -4,24 +4,33 @@ module Api
       before_action :token_authenticable?
 
       def create
-        transaction = Transaction.new(transaction_params)
-        account_source = Account.find_by!(number: params[:account_source])
-        account_destination =
-          Account.find_by!(number: params[:account_destination])
+        new_transaction = set_transaction
 
-        transaction.account_source = account_source
-        transaction.account_destination = account_destination
+        TransactionService.new.new_record(new_transaction)
 
-        raise Exception.new if account_source.amount < transaction.amount
+        render json: response_data(new_transaction), status: :ok
+      rescue ActiveRecord::RecordNotFound
+        render json: { errors: ['Conta não encontrada'] }, status: :not_found
+      end
 
-        transaction.account_source.amount -= transaction.amount
-        transaction.account_destination.amount += transaction.amount
+      private
 
-        transaction.save!
-        transaction.account_source.save!
-        transaction.account_destination.save!
+      def transaction_params
+        params.permit(:amount)
+      end
 
-        data = {
+      def set_transaction
+        Transaction.new(
+          account_source: Account.find_by!(number: params[:account_source]),
+          account_destination: Account.find_by!(
+            number: params[:account_destination]
+          ),
+          amount: params[:amount]
+        )
+      end
+
+      def response_data(transaction)
+        {
           data: {
             account_source: transaction.account_source.number,
             account_destination: transaction.account_destination.number,
@@ -29,26 +38,6 @@ module Api
           },
           message: 'Transação realizada com sucesso!'
         }
-
-        render json: data, status: :ok
-      rescue ActiveRecord::RecordInvalid
-        render json: {
-          errors: transaction.errors
-        }, status: :unprocessable_entity
-      rescue ActiveRecord::RecordNotFound
-        render json: {
-          errors: ['Conta não encontrada']
-        }, status: :not_found
-      rescue Exception
-        render json: {
-          errors: ['Conta não possui saldo suficiente para transação']
-        }, status: :bad_request
-      end
-
-      private
-
-      def transaction_params
-        params.permit(:amount)
       end
     end
   end
