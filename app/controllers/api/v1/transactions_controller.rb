@@ -9,6 +9,10 @@ module Api
         TransactionService.new.new_record(new_transaction)
 
         render json: response_data(new_transaction), status: :ok
+      rescue ActiveRecord::RecordInvalid
+        render json: {
+          errors: new_transaction.errors.full_messages
+        }, status: :unprocessable_entity
       rescue ActiveRecord::RecordNotFound
         render json: { errors: ['Conta não encontrada'] }, status: :not_found
       end
