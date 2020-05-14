@@ -7,19 +7,13 @@ module Api
         account = Account.new(account_params)
         account.save!
 
-        data = {
-          account: account.number,
-          message: 'Conta criada com sucesso',
-          token: account.token
-        }
-
-        render json: data, status: :ok
+        render json: format_success_data(account, 'Conta criada com sucesso'),
+               status: :ok
       rescue ActiveRecord::RecordInvalid
-        data = {
+        render json: {
           message: 'Não foi possível criar conta',
           errors: account.errors.full_messages
-        }
-        render json: data, status: :unprocessable_entity
+        }, status: :unprocessable_entity
       end
 
       def show
@@ -32,15 +26,21 @@ module Api
           }
         }, status: :ok
       rescue ActiveRecord::RecordNotFound
-        render json: {
-          error: 'Conta não encontrada'
-        }, status: :not_found
+        render json: { error: 'Conta não encontrada' }, status: :not_found
       end
 
       private
 
       def account_params
         params.permit(:name, :amount, :number)
+      end
+
+      def format_success_data(account, message)
+        {
+          account: account.number,
+          message: message,
+          token: account.token
+        }
       end
     end
   end
