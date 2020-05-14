@@ -40,6 +40,14 @@ $ bundle exec rspec
 ## Funcionalidades
 Durante o desenvolvimento foi utilizado o postman como ferramenta de teste de serviços RESTful. Porém, utilize a ferramenta que deseja para envio de requisições a API e utilize as funcionalidades: Criar conta, Transferir dinheiro e consultar saldo.
 
+A atribuição de saldos e transferências se dar por meio de número inteiros junto dos centavos, porém, o retorno da consulta de saldo o valor exibido já é formatado.
+
+Ex:
+ - Caso informe de uma conta de *100.00* atribua *10000*
+ - Caso consulte o saldo um montante de *10000* o retorno será *100.00*
+
+**Atenção**: Diferentemente da função 'Criar conta', as demais (Transferir e consultar), necessitam a atribuição do header `Authentication` com número do `token` recebido na criação da conta
+
 ### Criar Conta
 **Rota**: 'api/v1/accounts'
 
@@ -80,6 +88,8 @@ Exemplo de retorno **falha**:
 
 **Método**: POST
 
+**Headers**: `{ Authentication: <account_token> }`
+
 **Parametros**: `<account_source>, <account_destination>, <amount>`
 
 #### Execução
@@ -104,12 +114,16 @@ Exemplo de retorno **sucesso**:
 Exemplo de retorno de **falha**:
 ```
 {
-    errors: [ 'exemplo de erro ocorrido na requisição' ]
+    errors: [
+        'Conta não possui saldo para transferência'
+    ]
 }
 ```
 
 ### Consultar saldo
 **Rota**: 'api/v1/accounts/**número da conta**'
+
+**Headers**: `{ Authentication: <account_token> }`
 
 **Método**: GET
 

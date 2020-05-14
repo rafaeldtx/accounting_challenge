@@ -75,7 +75,7 @@ describe 'GET /api/v1/accounts/:id' do
           {
             data: {
               account: account.number,
-              amount: account.amount
+              amount: account.amount.to_f / 100
             }
           }.to_json
         )
