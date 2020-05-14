@@ -5,11 +5,6 @@ module Api
 
       def create
         account = Account.new(account_params)
-
-        if account.number.nil?
-          account.number = generate_account_number(account.number)
-        end
-
         account.save!
 
         data = {
@@ -22,7 +17,7 @@ module Api
       rescue ActiveRecord::RecordInvalid
         data = {
           message: "Não foi possível criar conta",
-          errors: account.errors
+          errors: account.errors.full_messages
         }
         render json: data, status: :unprocessable_entity
       end
@@ -46,14 +41,6 @@ module Api
 
       def account_params
         params.permit(:name, :amount, :number)
-      end
-
-      def generate_account_number(number)
-        while Account.where(number: number).exists? || number.nil?
-          number = SecureRandom.random_number(10000..99999)
-        end
-
-        number
       end
     end
   end
