@@ -150,6 +150,8 @@ Exemplo de retorno de **falha**:
 - **rspec-rails ([lib](https://github.com/rspec/rspec-rails "lib")):** Usado para implementação de testes unitários.
 - **factory_bot_rails ([lib](https://github.com/thoughtbot/factory_bot_rails "lib")):** Atribuido para facilitar criação e atribuição de instâncias de modelos durante testes do rspec. Usado em criação de 'factories' e na implementação de testes.
 - **shoulda-matchers ([lib](https://github.com/thoughtbot/shoulda-matchers "lib")):** Usado para simplificar resultados esperados em testes com sintaxe menos complexa.
+- **rubocop ([lib](https://github.com/rubocop-hq/rubocop "lib")):** Analisador de formatação de código com base no guia de estilos da comunidade Ruby.
+- **rubocop-rails ([lib](https://github.com/rubocop-hq/rubocop-rails "lib")):** Extensão focada em analise de código e convenção para Ruby on Rails.
 
 ## Progresso do projeto
 
@@ -161,3 +163,4 @@ Exemplo de retorno de **falha**:
 - [x] Testes de requisição
 - [x] Testes unitários
 - [x] Autenticação de cliente
+- [x] Analisador de código
