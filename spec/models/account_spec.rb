@@ -10,9 +10,6 @@ describe Account do
       expect(subject).to(
         validate_uniqueness_of(:number).ignoring_case_sensitivity
       )
-      expect(subject).to(
-        validate_uniqueness_of(:token).ignoring_case_sensitivity
-      )
     end
   end
 end

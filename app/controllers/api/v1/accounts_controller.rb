@@ -1,5 +1,3 @@
-require 'securerandom'
-
 module Api
   module V1
     class AccountsController < ApplicationController
@@ -7,7 +5,6 @@ module Api
 
       def create
         account = Account.new(account_params)
-        account.token = SecureRandom.uuid
 
         if account.number.nil?
           account.number = generate_account_number(account.number)
