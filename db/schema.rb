@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 2020_05_10_190416) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "number"
-    t.string "token", null: false
+    t.string "token", default: "", null: false
     t.index ["number"], name: "index_accounts_on_number", unique: true
-    t.index ["token"], name: "index_accounts_on_token", unique: true
+    t.index ["token"], name: "index_accounts_on_token"
   end
 
   create_table "transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

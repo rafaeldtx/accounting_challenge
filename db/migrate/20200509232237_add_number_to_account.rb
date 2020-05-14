@@ -1,8 +1,10 @@
 class AddNumberToAccount < ActiveRecord::Migration[6.0]
   def change
-    add_column :accounts, :number, :integer
-    add_index :accounts, :number, unique: true
-    add_column :accounts, :token, :string, null: false
-    add_index :accounts, :token, unique: true
+    change_table :accounts, bulk: true do |t|
+      t.integer :number
+      t.index :number, unique: true
+      t.string :token, null: false, default: ''
+      t.index :token
+    end
   end
 end

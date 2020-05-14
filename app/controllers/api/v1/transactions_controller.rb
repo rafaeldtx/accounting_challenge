@@ -1,7 +1,7 @@
 module Api
   module V1
     class TransactionsController < ApplicationController
-      before_action :is_token_authenticable?
+      before_action :token_authenticable?
 
       def create
         transaction = Transaction.new(transaction_params)
@@ -12,9 +12,7 @@ module Api
         transaction.account_source = account_source
         transaction.account_destination = account_destination
 
-        if account_source.amount < transaction.amount
-          raise Exception.new
-        end
+        raise Exception.new if account_source.amount < transaction.amount
 
         transaction.account_source.amount -= transaction.amount
         transaction.account_destination.amount += transaction.amount
@@ -55,4 +53,3 @@ module Api
     end
   end
 end
-

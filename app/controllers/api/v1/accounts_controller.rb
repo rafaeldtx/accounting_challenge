@@ -1,7 +1,7 @@
 module Api
   module V1
     class AccountsController < ApplicationController
-      before_action :is_token_authenticable?, except: %i[create]
+      before_action :token_authenticable?, except: %i[create]
 
       def create
         account = Account.new(account_params)
@@ -9,14 +9,14 @@ module Api
 
         data = {
           account: account.number,
-          message: "Conta criada com sucesso",
+          message: 'Conta criada com sucesso',
           token: account.token
         }
 
         render json: data, status: :ok
       rescue ActiveRecord::RecordInvalid
         data = {
-          message: "Não foi possível criar conta",
+          message: 'Não foi possível criar conta',
           errors: account.errors.full_messages
         }
         render json: data, status: :unprocessable_entity

@@ -1,6 +1,6 @@
-include ActionController::HttpAuthentication::Token::ControllerMethods
-
 class ApplicationController < ActionController::API
+  include ActionController::HttpAuthentication::Token::ControllerMethods
+
   private
 
   def token_authentication
@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def is_token_authenticable?
+  def token_authenticable?
     return true if token_authentication
 
     render json: {

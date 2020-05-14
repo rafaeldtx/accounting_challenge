@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 describe 'POST /api/v1/accounts' do
-  let(:payload) {
-    payload = {
+  let(:payload) do
+    {
       name: 'corporativo',
-      amount: 15000000,
-      number: 12345
+      amount: 15_000_000,
+      number: 12_345
     }
-  }
+  end
+
   context 'when send correctly params' do
     it 'returns ok status' do
       post '/api/v1/accounts', params: payload
@@ -19,8 +20,8 @@ describe 'POST /api/v1/accounts' do
       post '/api/v1/accounts', params: payload
 
       expect(response.body).to eq({
-        account: 12345,
-        message:"Conta criada com sucesso",
+        account: 12_345,
+        message: 'Conta criada com sucesso',
         token: Account.last.token
       }.to_json)
     end
@@ -30,7 +31,7 @@ describe 'POST /api/v1/accounts' do
     it 'returns ok status' do
       payload = {
         name: 'corporativo',
-        amount: 15000000
+        amount: 15_000_000
       }
 
       post '/api/v1/accounts', params: payload
@@ -53,10 +54,10 @@ end
 describe 'GET /api/v1/accounts/:id' do
   context 'when has an authorized token' do
     let(:account) { create(:account) }
-    let(:encoded_token) {
+    let(:encoded_token) do
       ActionController::HttpAuthentication::Token
         .encode_credentials(account.token)
-    }
+    end
 
     context 'and number account exists' do
       it 'returns ok status' do
@@ -84,14 +85,14 @@ describe 'GET /api/v1/accounts/:id' do
     context 'and sended account number not exists' do
       it 'returns not_found status' do
         get '/api/v1/accounts/1',
-          headers: { 'Authorization' => encoded_token }
+            headers: { 'Authorization' => encoded_token }
 
         expect(response).to have_http_status(:not_found)
       end
 
       it 'returns message error' do
         get '/api/v1/accounts/1',
-          headers: { 'Authorization' => encoded_token }
+            headers: { 'Authorization' => encoded_token }
 
         expect(response.body).to eq({ error: 'Conta não encontrada' }.to_json)
       end
@@ -100,14 +101,14 @@ describe 'GET /api/v1/accounts/:id' do
 
   context 'when has an unauthorized token' do
     it 'returns unauthorized status' do
-      get "/api/v1/accounts/1234",
+      get '/api/v1/accounts/1234',
           headers: { 'Authorization' => 'token_invalid' }
 
       expect(response).to have_http_status(:unauthorized)
     end
 
     it 'returns message unauthorized' do
-      get "/api/v1/accounts/1234",
+      get '/api/v1/accounts/1234',
           headers: { 'Authorization' => 'token_invalid' }
 
       expect(response.body).to eq(
