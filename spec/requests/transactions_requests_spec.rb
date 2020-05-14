@@ -68,7 +68,7 @@ describe 'POST /api/v1/transactions' do
         post '/api/v1/transactions',
              params: payload, headers: { 'Authorization' => encoded_token }
 
-        expect(response).to have_http_status(:not_found)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 

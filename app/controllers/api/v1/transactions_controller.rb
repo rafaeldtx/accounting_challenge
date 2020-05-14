@@ -13,20 +13,14 @@ module Api
         render json: {
           errors: new_transaction.errors.full_messages
         }, status: :unprocessable_entity
-      rescue ActiveRecord::RecordNotFound
-        render json: { errors: ['Conta não encontrada'] }, status: :not_found
       end
 
       private
 
-      def transaction_params
-        params.permit(:amount)
-      end
-
       def set_transaction
         Transaction.new(
-          account_source: Account.find_by!(number: params[:account_source]),
-          account_destination: Account.find_by!(
+          account_source: Account.find_by(number: params[:account_source]),
+          account_destination: Account.find_by(
             number: params[:account_destination]
           ),
           amount: params[:amount]
