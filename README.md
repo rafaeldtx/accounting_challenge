@@ -40,6 +40,8 @@ $ bundle exec rspec
 ## Funcionalidades
 Durante o desenvolvimento foi utilizado o postman como ferramenta de teste de serviços RESTful. Porém, utilize a ferramenta que deseja para envio de requisições a API e utilize as funcionalidades: Criar conta, Transferir dinheiro e consultar saldo.
 
+Realizado a etapa de setup, a aplicação estará rodando em `localhost:3000`. Utilize este host para execução das funcionalidades.
+
 A atribuição de saldos e transferências se dar por meio de número inteiros junto dos centavos, porém, o retorno da consulta de saldo o valor exibido já é formatado.
 
 Ex:
